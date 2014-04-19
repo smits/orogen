@@ -53,7 +53,7 @@ ADD_CUSTOM_TARGET(<%= typekit.name %>-regen
     <% ruby_bin   = RbConfig::CONFIG['RUBY_INSTALL_NAME']
        typegen_bin = 'typegen' %>
     <%= typegen_bin %> <%= Orocos::Generation.command_line_options.join(" ") %>
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/<%= Orocos::Generation.relative_generation_directory %>)
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 <% end %>
 # END if typekit.standalone?
@@ -113,7 +113,11 @@ install(FILES
     DESTINATION include/orocos/<%= typekit.name %>/typekit)
 <% typekit.local_headers(false).each do |path, dest_path| %>
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/<%= (Pathname.new( typekit.base_dir ) + path).relative_path_from(Pathname.new(typekit.automatic_dir)) %>
+MESSAGE("gen=${CMAKE_CURRENT_SOURCE_DIR}")
+MESSAGE("base=<%= (Pathname.new( typekit.base_dir ))%>")
+MESSAGE("auto=<%= (Pathname.new( typekit.automatic_dir ))%>")
+MESSAGE("path=<%= (path)%> dest_path=<%= (dest_path) %>")
+install(FILES <%= (Pathname.new( typekit.base_dir ) + path) %>
     DESTINATION include/orocos/<%= typekit.name %>/types/<%= typekit.name %>/<%= File.dirname(dest_path) %>)
 <% end %>
 
@@ -136,11 +140,11 @@ add_custom_command(
     OUTPUT "${TK_STAMP}"
     DEPENDS <%= loads = []
         typekit.loads.each do |file| 
-	    loads << typekit.cmake_relative_path(file)
+	    loads << file
         end
         loads.join(" ") %> <%= extloads = []
         typekit.external_loads.each do |file| 
-	    extloads << typekit.cmake_relative_path(file)
+	    extloads << file
         end
         extloads.join(" ") %>
     COMMENT "Typekit input changed. Run make <%= typekit.name %>-regen in your build directory first"
