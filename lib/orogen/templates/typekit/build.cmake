@@ -31,7 +31,7 @@ set(libname <%= typekit.name %>-typekit)
 orocos_typekit(${libname}
     <%= relatives = []
         implementation_files.each do |file|
-        relatives << typekit.cmake_relative_path(file)
+        relatives << typekit.relative_path(file)
         end
         relatives.sort.map { |filepath| '${CMAKE_CURRENT_LIST_DIR}/'+filepath }.join("\n    ") %>
     ${TYPEKIT_ADDITIONAL_SOURCES}
@@ -53,7 +53,7 @@ install(FILES
 install(FILES
     <%= relatives = []
         public_header_files.each do |file|
-        relatives << typekit.cmake_relative_path(file)
+        relatives << typekit.relative_path(file)
     end
     relatives.sort.map { |filepath| '${CMAKE_CURRENT_LIST_DIR}/'+filepath }.join("\n    ") %>
     DESTINATION include/orocos/<%= typekit.name %>/typekit)
@@ -63,7 +63,7 @@ MESSAGE("gen=${CMAKE_CURRENT_LIST_DIR}")
 MESSAGE("base=<%= (Pathname.new( typekit.base_dir ))%>")
 MESSAGE("auto=<%= (Pathname.new( typekit.automatic_dir ))%>")
 MESSAGE("path=<%= (path)%> dest_path=<%= (dest_path) %>")
-install(FILES ${CMAKE_CURRENT_LIST_DIR}/<%= (Pathname.new( typekit.base_dir ) + path) %>
+install(FILES ${CMAKE_CURRENT_LIST_DIR}/types/<%= (path) %>
     DESTINATION include/orocos/<%= typekit.name %>/types/<%= typekit.name %>/<%= File.dirname(dest_path) %>)
 <% end %>
 

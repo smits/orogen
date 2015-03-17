@@ -1821,6 +1821,9 @@ module Orocos
             def cmake_relative_path(file, *subdir)
                 "${CMAKE_CURRENT_SOURCE_DIR}/#{Pathname.new(file).relative_path_from(Pathname.new(File.join(automatic_dir, *subdir)))}"
             end
+            def relative_path(file, *subdir)
+                "#{Pathname.new(file).relative_path_from(Pathname.new(File.join(automatic_dir, *subdir)))}"
+            end
 	end
     end
 end
