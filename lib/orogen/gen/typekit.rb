@@ -1804,6 +1804,8 @@ module Orocos
 		save_automatic("#{name}-typekit.pc.in", pkg_config)
                 cmake = Generation.render_template 'typekit', 'CMakeLists.txt', binding
                 save_automatic("CMakeLists.txt", cmake)
+                cmake_build = Generation.render_template 'typekit', 'build.cmake', binding
+                save_automatic("build.cmake", cmake_build)
                 manifest = Generation.render_template 'typekit', 'manifest.xml', binding
                 save_automatic("manifest.xml", manifest)
                 #package = Generation.render_template 'typekit', 'package.xml', binding

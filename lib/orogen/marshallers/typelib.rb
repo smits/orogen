@@ -51,6 +51,8 @@ module Orocos
                     typekit.save_automatic("transports", "typelib", "#{typekit.name}-transport-typelib.pc.in", pkg_config)
                     code = Generation.render_template "typekit", "typelib", "CMakeLists.txt", binding
                     typekit.save_automatic("transports", "typelib", "CMakeLists.txt", code)
+                    cmake_build = Generation.render_template "typekit", "typelib", "build.cmake", binding
+                    typekit.save_automatic("transports", "typelib", "build.cmake", cmake_build)
 
                     return [], []
                 end
