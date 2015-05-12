@@ -114,6 +114,7 @@ Deinitializer& operator << (Deinitializer& deinit, servicediscovery::ServiceDisc
 <% end %>
 
 <% if deployer.corba_enabled? %>
+#include <stdint.h>
 int sigint_com[2];
 void sigint_quit_orb(int)
 {
